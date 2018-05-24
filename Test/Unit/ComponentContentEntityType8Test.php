@@ -59,6 +59,15 @@ class ComponentContentEntityType8Test extends TestBase {
 
     $files = $this->generateModuleFiles($module_data);
 
+    $entity_interface_file = $files['src/Entity/KittyCatInterface.php'];
+    $php_tester = new PHPTester($entity_interface_file);
+    $php_tester->assertDrupalCodingStandards();
+    $php_tester->assertHasInterface('Drupal\test_module\Entity\KittyCatInterface');
+
+    dump($files["src/Entity/KittyCatInterface.php"]);
+    $php_tester->assertClassHasParent('Drupal\Core\Entity\ContentEntityInterface');
+    return;
+
     $this->assertCount(4, $files, "Expected number of files is returned.");
     $this->assertArrayHasKey("$module_name.info.yml", $files, "The files list has a .info.yml file.");
     $this->assertArrayHasKey("$module_name.permissions.yml", $files, "The files list has a .info.yml file.");
@@ -131,6 +140,9 @@ class ComponentContentEntityType8Test extends TestBase {
     $php_tester = new PHPTester($entity_interface_file);
     $php_tester->assertDrupalCodingStandards();
     $php_tester->assertHasInterface('Drupal\test_module\Entity\KittyCatInterface');
+
+    dump($files["src/Entity/KittyCatInterface.php"]);
+    $php_tester->assertClassHasParent('Drupal\Core\Entity\ContentEntityInterface');
 
     // Check the .permissions file.
     $permissions_file = $files["$module_name.permissions.yml"];
