@@ -201,7 +201,7 @@ class PHPTester {
       Assert::fail("Parse error: {$error->getMessage()}");
     }
 
-    //dump($ast);
+    dump($ast);
 
     // Reset our array of parser nodes.
     // This then passed into the anonymous visitor class, and populated with the
@@ -419,6 +419,14 @@ class PHPTester {
 
     // Check the full parent name is imported.
     $this->assertImportsClassLike($parent_class_name_parts, $message);
+  }
+
+  public function assertInterfaceHasParent($parent_full_interface_name, $message = NULL) {
+    $parent_class_name_parts = explode('\\', $parent_full_class_name);
+
+    // There will be only one interface.
+    $class_node = reset($this->parser_nodes['interfaces']);
+    $class_name = $class_node->name;
   }
 
   /**
